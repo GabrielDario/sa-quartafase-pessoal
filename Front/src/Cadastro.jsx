@@ -2,12 +2,12 @@ import './Home.css'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-const host = "http://localhost:3000"
+const host = "http://localhost:3000";
 
 
 function Cadastro() {
   const [retirada, setRetirada] = useState('')
-  const [devolucao, setDevolucao] = useState('')
+  let [devolucao, setDevolucao] = useState('')
   const [Epis, setEpis] = useState([])
   const [Func, setFunc] = useState([])
   const [Rels, setRels] = useState([])
@@ -41,7 +41,7 @@ function Cadastro() {
     async function fetchDataRelat() {
       try {
         const response = await axios.post(`${host}/listarRelatorios`);
-
+       
         setRels(response.data.relatorioResults);
       } catch (error) {
         console.log('Erro ao obter dados do func:', error);
@@ -54,26 +54,14 @@ function Cadastro() {
 
   function exRelatorioFront() {
     console.log(Rels)
-    let acharRel = false;
+    var selectRel = document.getElementById('selectRel');
+    var idRel = selectRel.options[selectRel.selectedIndex].value;
 
+    let acharItem = Rels.find(item => item.id == idRel)
+    let idepi = acharItem.idepi;
 
-    //Verificação se existe Relatorios
-    for (let i = 0; i < Rels.length; i++) {
-      console.log(Rels[i].id)
-      if (Rels[i].id == idRel) {
-        acharRel = true;
-      }
-    }
-
-    if (acharRel == false) {
-      alert('Esse id não existe!')
-      return;
-    }
-
-    let dados = { idRel };
-    console.log(dados)
     try {
-      axios.delete(`${host}/exRelatorio/${idRel}`);
+      axios.delete(`${host}/exRelatorio/${idRel}/${idepi}`);
       alert("Dados Excluidos com sucesso!");
       window.location.reload();
     } catch (erro) {
@@ -81,17 +69,15 @@ function Cadastro() {
     }
   }
   function addRelatorioFront() {
-
     var selectFunc = document.getElementById('selectFunc');
     var selectEpi = document.getElementById('selectEpi');
     var idfuncionario = selectFunc.options[selectFunc.selectedIndex].value;
     var idepi = selectEpi.options[selectEpi.selectedIndex].value;
 
-
+    let pularMes = retirada.substring(5, 7);
+    pularMes = Number(pularMes)
+    devolucao = retirada.replace(pularMes, pularMes + 1)
     let dados = { idfuncionario, idepi, retirada, devolucao };
-    console.log(dados)
-
-
 
     if (retirada >= devolucao || idepi == '' || idfuncionario == '' || retirada == '' || devolucao == '') {
       alert("Dados inválidos");
@@ -133,25 +119,25 @@ function Cadastro() {
 
               <div>
                 <h3>Epis:</h3>
-                {Epis.length > 0 ?    <select id="selectEpi">
+                {Epis.length > 0 ? <select id="selectEpi">
                   {Epis.map(epi => (
                     <option key={epi.id} value={epi.id}>{epi.nome}
                     </option>
 
                   ))}
                 </select> : <h3>NENHUMA EPI DISPONIVEL OU CADASTRADA</h3>}
-             
+
               </div>
 
               <div>
                 <h3>Retirada:</h3>
                 <input type='date' onChange={(evento) => setRetirada(evento.target.value)} />
               </div>
-              <h3>Para devolver dia : {
-                
-              retirada.replace(retirada.substring(5, 7), Number(retirada.substring(5, 7)) + 1)
-              }</h3>
-          
+              {retirada == "" ? <h3>Pra devolver um mês depois</h3> : <h3>Para devolver {
+                retirada.replace(retirada.substring(5, 7), Number(retirada.substring(5, 7)) + 1)
+              }</h3>}
+
+
               <button className='adicionarEpi' onClick={addRelatorioFront}>
                 <span>Adicionar</span>
               </button>
@@ -159,7 +145,14 @@ function Cadastro() {
           </div>
           <div className='divisa2'>
             <h1>Excluir Registro</h1>
-            <input type='number' onChange={(evento) => setIdRel(evento.target.value)} />
+            { Rels.length == 0 ? <h3>Nenhum epi vinculado</h3> :  <select id="selectRel">
+                  {Rels.map(rels => (
+                    <option key={rels.id} value={rels.id}>{rels.id}
+                    </option>
+
+                  ))}
+                </select>}
+           
             <br />
             <button className='adicionarEpi' onClick={exRelatorioFront}>
               <span>Excluir</span>

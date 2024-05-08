@@ -141,10 +141,11 @@ const exRelatorio = async (req, res) => {
 
     let disponibilidade = true
     const { idRel } = req.params
-    console.log(`foi back ${idRel}`)
+    const { idEpi } = req.params
+    console.log(`foi back ${idRel} e ${idEpi}`)
     try {
         await Relatorios.destroy({ where: { id: idRel } })
-        let apiAtuaizadoNovo = await Epis.update({ disponibilidade }, { where: { id: idRel } })
+        let apiAtuaizadoNovo = await Epis.update({ disponibilidade }, { where: { id: idEpi } })
         console.log(apiAtuaizadoNovo)
         res.status(201).send({ apiAtuaizadoNovo })
     }

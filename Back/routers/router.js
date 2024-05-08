@@ -13,7 +13,7 @@ router.put("/editarEpi", editarEpi)
 router.delete("/apagarEpi/:id", apagarEpi)
 
 router.post("/addRelatorio", addRelatorio)
-router.delete("/exRelatorio/:idRel", exRelatorio)
+router.delete("/exRelatorio/:idRel/:idEpi", exRelatorio)
 
 router.post("/listarRelatorios", listarRelatorios)
 router.post("/hfunc", listarHistoricoFunc)

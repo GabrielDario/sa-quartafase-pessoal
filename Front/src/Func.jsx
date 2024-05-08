@@ -26,10 +26,16 @@ function Func() {
 
 
   function adicionar() {//perfeito
+
     if (nome == null || cpf == null || cargo == null) {
       alert("Faltando dados!");
       return;
     }
+    if (cpf.length != 11) {
+      alert("CPF INVÁLIDA");
+        return;
+    }
+
     const dados = { nome, cpf, cargo }
     axios.post(`${host}/addFunc`, dados)
     alert('Salvo com sucesso!');
@@ -43,6 +49,8 @@ function Func() {
     document.getElementById("EditarFuncCpf").value = '';
     document.getElementById("EditarFuncCargo").value = '';
     document.getElementById("EditarFuncId").value = '';
+
+
     if (nome != null && cpf != null && cargo != null && id != null) {
       axios.put(`${host}/editarFunc`, dadosEdit)
       alert("Funcionario editado com sucesso");
