@@ -1,0 +1,9 @@
+Em administrar uso de epi:
+  - Mostrar todos os funcionários
+  - Mostrar epi disponíveis OPTIONS
+  - Sen não tiver EPI disponíveis, mostrar usuários
+  
+  - Entregar 30 dias depois automaticamente qnd botar Retirada
+  - EXCLUIR REGISTRO COM OPTIONS
+ - Histórico de funcionários mostrar tudo
+ - CPF COM 11 DIGITOS

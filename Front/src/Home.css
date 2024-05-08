@@ -1,0 +1,253 @@
+body {
+  background-image: url("./assets/Fundo.jpg");
+  background-size: cover;
+}
+
+.index {
+  background-color: #5ac7fab7;
+  height: 500px;
+  width: 900px;
+  margin: auto;
+  margin-top: 90px;
+  border-radius: 5%;
+  text-decoration: none;
+
+}
+
+.titulo {
+  padding-top: 30px;
+}
+
+.index .links {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  margin-top: 100px;
+  padding: 0 40px 0 40px;
+
+}
+
+.lado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.link {
+  color: #000;
+  text-decoration: none;
+  width: 150px;
+}
+
+.logo-div {
+  text-align: center;
+  margin: auto;
+}
+
+.logo-foto {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  margin-top: 10%;
+
+}
+
+h1 {
+  color: black;
+  text-align: center;
+}
+
+
+.adicionarEpi,
+.alterarEpi,
+.apagarEpi,
+.adicionarFunc {
+  color: white;
+  margin-top: 5%;
+  background-color: blue;
+  width: 80px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.content {
+  background-color: rgb(255, 255, 255);
+  height: 350px;
+  width: 850px;
+  margin: auto;
+  border-radius: 5%;
+  text-align: center;
+  z-index: 0;
+  position: absolute;
+  margin: 39px 17px;
+  overflow: scroll;
+  overflow-x: hidden
+}
+
+.excluir-epi,
+.editar-epi,
+.listar-epi,
+.excluir-func,
+.editar-func,
+.listar-func {
+  display: none;
+}
+
+.content h2 {
+  display: inline-block;
+  padding: 0 25px;
+
+}
+
+
+
+.navApiGeral,
+.navFuncGeral {
+  margin-left: 25px;
+  position: relative;
+  left: -258px;
+}
+
+.navApi,
+.navApi2,
+.navApi3,
+.navApi4,
+.navFunc,
+.navFunc2,
+.navFunc3,
+.navFunc4 {
+  background-color: darkgray;
+  border: none;
+  height: 60px;
+  width: 80px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: absolute;
+
+}
+
+.navApi,
+.navFunc {
+  left: 250px;
+}
+
+.navApi2,
+.navFunc2 {
+  left: 350px;
+}
+
+.navApi3,
+.navFunc3 {
+  left: 450px;
+}
+
+.navApi4,
+.navFunc4 {
+  left: 550px;
+}
+
+.navApi,
+.navFunc {
+  background-color: white;
+}
+
+.listarEpi,
+.excluirEpi,
+.editarEpi,
+.listarFunc,
+.excluirFunc,
+.editarFunc {
+  display: none;
+}
+
+
+.todo {
+  background-color: rgb(255, 255, 255);
+  height: 350px;
+  width: 850px;
+  margin: auto;
+  border-radius: 5%;
+  text-align: center;
+  z-index: 0;
+  position: absolute;
+  margin: 39px 17px;
+  font-size: x-small;
+}
+
+
+.listar {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.arrumar {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  margin-left: 10px;
+  border-radius: 10px;
+}
+
+.organizado {
+  margin-right: 10px;
+}
+
+.organizar {
+  display: flex;
+
+}
+
+.organizar div {
+  width: 25%;
+  text-align: start;
+  padding-bottom: 10px;
+  margin-left: 30px;
+
+}
+
+
+.org {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dadosEpi {
+  display: flex;
+}
+
+.dadosEpi div {
+  width: 25%;
+  color: rgb(68, 180, 180);
+  text-align: start;
+  margin-left: 30px;
+}
+
+.listar1 {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.organizar1 {
+  display: flex;
+}
+
+.organizar1 div {
+  width: 25%;
+  text-align: start;
+  padding-bottom: 10px;
+  margin-left: 30px;
+}
+
+.divisa {
+  display: inline-block;
+  margin: 25px 0px 0px -306px;
+  position: absolute;
+}
+
+.divisa2 {
+  display: inline-block;
+  margin: 93px 0px 0px 70px;
+  position: absolute;
+}
