@@ -8,3 +8,6 @@ Em administrar uso de epi:
  - CPF COM 11 DIGITOS
 
  - Histórico de funcionários mostrar tudo
+
+- Mostra codigo no listar epi
+- Excluir por id no EPI

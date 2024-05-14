@@ -9,16 +9,18 @@ function HEpi() {
   const [juncao, setJuncao] = useState([])
   const [juncaoPermanente, setJuncaoPermanente] = useState([])
   const [id, setId] = useState([])
-  let trocar = false;
   useEffect(() => {
     async function fetchData() {
       try {
         const response = await axios.post(`${host}/listarRelatorios`);
         const responseEpi = await axios.post(`${host}/listarEpi`);
+        const responseFunc = await axios.post(`${host}/listarFunc`);
 
         let relatorioResults = response.data.relatorioResults;
         let episResults = responseEpi.data.episResults;
+        let FuncResults = responseFunc.data.FuncResults;
 
+        console.log(FuncResults)
         console.log(relatorioResults)
         console.log(episResults)
         relatorioResults.forEach((item) => {
@@ -29,24 +31,31 @@ function HEpi() {
           item.retirada = `${dia}/${mes}/${ano}`
         })
         let novaLista = [];
-        let x = 'Epi Dispinivel'
+        let x = 'x'
         let sim = 'Sim';
-        for (let i = 0; i < episResults.length; i++) {
+        for (let i = 0; i < episResults.length ; i++) {
           let achar = false;
-          for (let j = 0; j < relatorioResults.length; j++) {
-            if (episResults[i].id == relatorioResults[j].id) {
-              achar = true;
-              novaLista.push({
-                id: episResults[i].id, idfuncionario: relatorioResults[j].idfuncionario,
-                idepi: relatorioResults[j].idepi, regEntrada: relatorioResults[j].retirada, disponibilidade: 'Não'
-              })
-              break;
-            }
 
-          }
+          achar = true;
+          novaLista.push({
+            id: episResults[i].id,
+            idfuncionario: relatorioResults[i].idfuncionario,
+            nomeFunc: FuncResults[i].nome,
+            idepi: relatorioResults[i].idepi,
+            nomeEpi: episResults[i].nome,
+            regEntrada: relatorioResults[i].retirada,
+            disponibilidade: 'Não'
+          })
+
           if (achar == false) {
             novaLista.push({
-              id: episResults[i].id, idfuncionario: x, idepi: x, regEntrada: x, disponibilidade: sim
+              id: episResults[i].id,
+              idfuncionario: x,
+              nomeFunc: x,
+              idepi: x,
+              nomeEpi: x,
+              regEntrada: x,
+              disponibilidade: sim
             })
           }
 
@@ -64,9 +73,9 @@ function HEpi() {
   }, []);
 
   const buscarEpi = async (req, res) => {
-    
+
     console.log('BUSCANDO EPI front');
-   
+
 
     let achouId = false;
     juncaoPermanente.forEach((item) => {
@@ -100,20 +109,22 @@ function HEpi() {
       </div>
       <div className='content'>
         <div className='dadosEpi'>
-          <div>ID</div>
           <div>IdFunc</div>
+          <div>Nome Funcionário</div>
           <div>IdEpi</div>
+          <div>nome do epi</div>
           <div>regEntrada</div>
           <div>Disponível</div>
         </div>
         <ul className='listar1'>
-       
+
           {juncao.map(juncao => (
             <li key={juncao.id}>
               <div className='organizar1'>
-                <div className='relId'>{juncao.id}</div>
                 <div className='reIdFunc'>{juncao.idfuncionario}</div>
+                <div className='reNomeFunc'>{juncao.nomeFunc}</div>
                 <div className='reIdEpi'>{juncao.idepi}</div>
+                <div className='reIdEpi'>{juncao.nomeEpi}</div>
                 <div className='reRetirada'>{juncao.regEntrada}</div>
                 <div className='reIdEpi'>{juncao.disponibilidade}</div>
               </div>
