@@ -10,6 +10,7 @@ function Func() {
   const [cargo, setCargo] = useState(null)
   const [id, setId] = useState(null)
   const [funcs, setFuncs] = useState([])
+  const [Rels, setRels] = useState([])
 
   useEffect(() => {
     async function fetchData() {
@@ -20,7 +21,17 @@ function Func() {
         console.error('Erro ao obter dados do backend:', error);
       }
     }
+    async function fetchDataRelat() {
+      try {
+        const response = await axios.post(`${host}/listarRelatorios`);
+       
+        setRels(response.data.relatorioResults);
+      } catch (error) {
+        console.log('Erro ao obter dados do func:', error);
+      }
+    }
     fetchData();
+    fetchDataRelat();
   }, []);
 
 
@@ -31,11 +42,22 @@ function Func() {
       alert("Faltando dados!");
       return;
     }
+
     if (cpf.length != 11) {
-      alert("CPF INVÁLIDA");
+      alert("CPF INVÁLIDO");
         return;
     }
-
+    let verifyDuplicity = false;
+    funcs.forEach((item) => {
+      if (item.cpf == cpf) {
+        alert("CPF já cadastrado");
+        verifyDuplicity = true
+      }
+    });
+    
+    if(verifyDuplicity == true){
+      return;
+    }
     const dados = { nome, cpf, cargo }
     axios.post(`${host}/addFunc`, dados)
     alert('Salvo com sucesso!');
@@ -64,13 +86,21 @@ function Func() {
 
   function apagar() {
     let achouId = false;
+    let funcDisponivel = false;
     funcs.forEach((item) => {
       if (item.id == id) {
         achouId = true;
       }
     });
 
-    if (achouId == false || id == null) {
+    Rels.forEach((item) => {
+      if (item.idfuncionario == id) {
+        alert("Funcionário vinculado a algo,impossível deletar!");
+        funcDisponivel = true;
+        return;
+      }
+    })
+    if (achouId == false || id == null|| funcDisponivel == true) {
       alert("Falha ao remover Funcionário")
       return;
     } else {

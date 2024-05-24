@@ -11,7 +11,7 @@ function Cadastro() {
   const [Epis, setEpis] = useState([])
   const [Func, setFunc] = useState([])
   const [Rels, setRels] = useState([])
-  const [idRel, setIdRel] = useState('')
+  // const [idRel, setIdRel] = useState('')
 
   useEffect(() => {
     async function fetchDataEpi() {
@@ -92,7 +92,7 @@ function Cadastro() {
 
       }
     }
-
+    window.location.reload();
   }
 
 

@@ -5,9 +5,11 @@ Em administrar uso de epi:
   - Entregar 30 dias depois automaticamente qnd botar Retirada
   - EXCLUIR REGISTRO COM OPTIONS
   - Mudar disponobilidade
- - CPF COM 11 DIGITOS
+ - CPF COM 11 DIGITOS e duplicidade
+- Proibido excluir epi que não está disponivel
+- Proibido excluir FUNCIONARIO que não tenha vínculo
 
- - Histórico de funcionários mostrar tudo
-
+ - Histórico de funcionários mostrar tudo -------
+ 
 - Mostra codigo no listar epi
 - Excluir por id no EPI

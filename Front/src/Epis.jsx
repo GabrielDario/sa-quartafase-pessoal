@@ -169,13 +169,23 @@ function Epi() {
 
   function removerBackend() {
     let achouId = false;
+    let jaEstaDisponivel = true;
     epi.forEach((item) => {
       if (item.id == id) {
         achouId = true;
       }
     });
+    epi.forEach((element) => {
+      if (element.id == id) {
+        if(element.disponibilidade == "Não") {
+          alert('EPI vinculado! IMPOSSÍVEL APAGAR!');
+          jaEstaDisponivel = false;
+        }
+      }
+    });
 
-    if (achouId == false || id == null) {
+
+    if (achouId == false || id == null || jaEstaDisponivel == false) {
       alert("Falha ao remover Epi")
       return;
     } else {
