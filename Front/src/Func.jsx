@@ -256,7 +256,7 @@ function Func() {
               <div>Cargo</div>
             </div>
             <ul className='listar'>
-              {funcs.map(func => (
+              {funcs.length > 0 ? funcs.map(func => (
                 <li key={func.id}>
                   <div className='organizar' >
                     <div className='org'>{func.id}</div>
@@ -265,7 +265,7 @@ function Func() {
                     <div className='org'>{func.cargo}</div>
                   </div>
                 </li>
-              ))}
+              )) : <h1>Nenhum Funcionário cadastrado!</h1>}
             </ul>
           </div>
 

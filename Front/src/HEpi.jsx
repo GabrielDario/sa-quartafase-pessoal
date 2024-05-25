@@ -20,9 +20,6 @@ function HEpi() {
         let episResults = responseEpi.data.episResults;
         let FuncResults = responseFunc.data.FuncResults;
 
-        console.log(FuncResults)
-        console.log(relatorioResults)
-        console.log(episResults)
         relatorioResults.forEach((item) => {
           let arrumar = item.retirada.substr(0, 10);
           let dia = arrumar.substr(8, 10)
@@ -31,36 +28,24 @@ function HEpi() {
           item.retirada = `${dia}/${mes}/${ano}`
         })
         let novaLista = [];
-        let x = 'x'
-        let sim = 'Sim';
-        for (let i = 0; i < episResults.length ; i++) {
-          let achar = false;
-
-          achar = true;
+        for (let i = 0; i < relatorioResults.length ; i++) {
+          let { nome: acharNome } = FuncResults.find(element => element.id == relatorioResults[i].idfuncionario);
+          let { nome: acharEpi } = episResults.find(element => element.id == relatorioResults[i].idepi);
           novaLista.push({
             id: episResults[i].id,
             idfuncionario: relatorioResults[i].idfuncionario,
-            nomeFunc: FuncResults[i].nome,
+            nomeFunc: acharNome,
             idepi: relatorioResults[i].idepi,
             nomeEpi: episResults[i].nome,
+            codigo: acharEpi,
             regEntrada: relatorioResults[i].retirada,
-            disponibilidade: 'Não'
           })
 
-          if (achar == false) {
-            novaLista.push({
-              id: episResults[i].id,
-              idfuncionario: x,
-              nomeFunc: x,
-              idepi: x,
-              nomeEpi: x,
-              regEntrada: x,
-              disponibilidade: sim
-            })
-          }
 
         }
-        console.log(novaLista)
+        novaLista.sort( (x,y) => {
+          return x.idepi - y.idepi;
+        })
         setJuncao(novaLista);
         setJuncaoPermanente(novaLista);
 
@@ -73,9 +58,7 @@ function HEpi() {
   }, []);
 
   const buscarEpi = async (req, res) => {
-
     console.log('BUSCANDO EPI front');
-
 
     let achouId = false;
     juncaoPermanente.forEach((item) => {
@@ -84,21 +67,21 @@ function HEpi() {
       }
     });
 
-
     if (id == null || achouId == false) {
       alert("Id vazio ou Inválido");
       return;
     }
     const procurar = juncaoPermanente.find((element) => element.id == id);
     setJuncao([procurar])
-    console.log(procurar)
 
   }
-
+  function voltar() {
+    window.location.reload();
+  }
   return (
     <div className='index'>
       <Link to={"/"}>
-        < h1 > Historico de Epis</h1>
+        < h1 > Historico de Epis Ocupado</h1>
       </Link >
       <div className='arrumar'>
         <h3 className='organizado'>ID Epi's</h3>
@@ -106,30 +89,33 @@ function HEpi() {
         <button className='organizado' onClick={buscarEpi}>
           <span>Buscar</span>
         </button>
+        <button className='organizado' onClick={voltar}>
+          <span>Mostrar Todos</span>
+        </button>
       </div>
       <div className='content'>
         <div className='dadosEpi'>
+          <div>ID do EPI</div>
+          <div>Nome do EPI</div>
+          <div>Código</div>
           <div>IdFunc</div>
           <div>Nome Funcionário</div>
-          <div>IdEpi</div>
-          <div>nome do epi</div>
-          <div>regEntrada</div>
-          <div>Disponível</div>
+          <div>Registro de Entrada</div>
         </div>
         <ul className='listar1'>
 
-          {juncao.map(juncao => (
+          {juncao.length > 0 ?juncao.map(juncao => (
             <li key={juncao.id}>
               <div className='organizar1'>
-                <div className='reIdFunc'>{juncao.idfuncionario}</div>
-                <div className='reNomeFunc'>{juncao.nomeFunc}</div>
                 <div className='reIdEpi'>{juncao.idepi}</div>
                 <div className='reIdEpi'>{juncao.nomeEpi}</div>
+                <div className='reIdEpi'>{juncao.codigo}</div>
+                <div className='reIdFunc'>{juncao.idfuncionario}</div>
+                <div className='reNomeFunc'>{juncao.nomeFunc}</div>
                 <div className='reRetirada'>{juncao.regEntrada}</div>
-                <div className='reIdEpi'>{juncao.disponibilidade}</div>
               </div>
             </li>
-          ))}
+          )): <h1>Nenhum EPI Vinculado Cadastrado</h1> }
         </ul>
       </div>
     </div>

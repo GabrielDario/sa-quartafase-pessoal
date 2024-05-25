@@ -8,8 +8,17 @@ Em administrar uso de epi:
  - CPF COM 11 DIGITOS e duplicidade
 - Proibido excluir epi que não está disponivel
 - Proibido excluir FUNCIONARIO que não tenha vínculo
-
- - Histórico de funcionários mostrar tudo -------
- 
+- Mostrar todos os EPI no HEPI
+ - Histórico de funcionários mostrar tudo 
+ - Ordenarar por id func e tudo que ele tem
+ - Selecionar funcionário filtrará apenas os dos funcionários    
 - Mostra codigo no listar epi
-- Excluir por id no EPI
+
+- Excluir por nome no EPI
+- Excluir por nome no Func
+
+- Organizar não repetir 
+      - Nomes de epi e funcionario
+commit -m "Ajustando para quando não tenha dados em todas as telas, Correção de bug HEPI - Mostrar ocupados, 
+Organização da lista de HEPI E HFUNC e mostrando tudo,filtrando HFUNC por nome"
+Organizar código - Empacotar e comentar

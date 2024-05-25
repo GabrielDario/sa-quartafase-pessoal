@@ -246,7 +246,7 @@ function Epi() {
               <div>Disponibilidade</div>
             </div>
             <ul className='listar1'>
-              {epi.map(epi => (
+              {epi.length > 0 ? epi.map(epi => (
                 <li key={epi.id}>
                   <div className='organizar1'>
                     <div className='org'>{epi.id}</div>
@@ -255,7 +255,7 @@ function Epi() {
                     <div className='org'>{epi.disponibilidade}</div>
                   </div>
                 </li>
-              ))}
+              )): <h1>Nenhum EPI Cadasatrado</h1> }
             </ul>
           </div>
 
