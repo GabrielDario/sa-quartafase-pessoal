@@ -19,6 +19,7 @@ Em administrar uso de epi:
 
 - Organizar não repetir 
       - Nomes de epi e funcionario
-commit -m "Ajustando para quando não tenha dados em todas as telas, Correção de bug HEPI - Mostrar ocupados, 
-Organização da lista de HEPI E HFUNC e mostrando tudo,filtrando HFUNC por nome"
 Organizar código - Empacotar e comentar
+
+git commit -m "Ajustando para quando não tenha dados em todas as telas, Correção de bug HEPI - Mostrar ocupados, 
+Organização da lista de HEPI E HFUNC e mostrando tudo,filtrando HFUNC por nome"
