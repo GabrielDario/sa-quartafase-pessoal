@@ -12,7 +12,7 @@ function Epi() {
   const [validade, setValidade] = useState(null)
   const [nome, setNome] = useState(null)
   const [epi, setEpis] = useState([])
-
+  const [epiNotAvailable, setEpiNotAvailable] = useState([])
   useEffect(() => {
     async function fetchData() {
       try {
@@ -35,7 +35,8 @@ function Epi() {
           let ano = arrumar.substr(0, 4)
           item.validade = `${dia}/${mes}/${ano}`
         })
-        console.log(epiResults);
+        let listaDisponivel = epiResults.filter(item => item.disponibilidade == "Sim")
+        setEpiNotAvailable(listaDisponivel)
         setEpis(response.data.episResults);
 
       } catch (error) {
@@ -168,24 +169,11 @@ function Epi() {
   }
 
   function removerBackend() {
-    let achouId = false;
-    let jaEstaDisponivel = true;
-    epi.forEach((item) => {
-      if (item.id == id) {
-        achouId = true;
-      }
-    });
-    epi.forEach((element) => {
-      if (element.id == id) {
-        if(element.disponibilidade == "Não") {
-          alert('EPI vinculado! IMPOSSÍVEL APAGAR!');
-          jaEstaDisponivel = false;
-        }
-      }
-    });
+    let id = document.getElementById("selectEpi").value;
+    setId(id);
 
 
-    if (achouId == false || id == null || jaEstaDisponivel == false) {
+    if (id == null) {
       alert("Falha ao remover Epi")
       return;
     } else {
@@ -255,7 +243,7 @@ function Epi() {
                     <div className='org'>{epi.disponibilidade}</div>
                   </div>
                 </li>
-              )): <h1>Nenhum EPI Cadasatrado</h1> }
+              )) : <h1>Nenhum EPI Cadasatrado</h1>}
             </ul>
           </div>
 
@@ -286,10 +274,23 @@ function Epi() {
 
           <div className='excluirEpi' id="excluirEpi">
             <h1>Excluir</h1>
-            <input type='number' id="apagarEpi" onChange={(evento) => setId(evento.target.value)} />
-            <button onClick={removerBackend}>
-              <span>Apagar</span>
-            </button>
+            {
+              epiNotAvailable.length > 0 ? <div>
+              <select id="selectEpi">
+                {epiNotAvailable.map(epi => (
+                  <option key={epi.id} value={epi.id}>{epi.nome}
+                  </option>
+
+                ))}
+              </select>
+              <button onClick={removerBackend} style={{ margin: 10 }}>
+                <span>Apagar</span>
+              </button>
+
+            </div> : <h3>Nenhum EPI vinculado disponível!</h3>
+            }
+            
+
           </div>
 
         </div>

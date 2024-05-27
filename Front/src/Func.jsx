@@ -10,6 +10,7 @@ function Func() {
   const [cargo, setCargo] = useState(null)
   const [id, setId] = useState(null)
   const [funcs, setFuncs] = useState([])
+  const [funcsParaExcluir, setFuncParaExcluir] = useState([])
   const [Rels, setRels] = useState([])
 
   useEffect(() => {
@@ -24,14 +25,46 @@ function Func() {
     async function fetchDataRelat() {
       try {
         const response = await axios.post(`${host}/listarRelatorios`);
-       
+
         setRels(response.data.relatorioResults);
+      } catch (error) {
+        console.log('Erro ao obter dados do func:', error);
+      }
+    }
+    async function fetDataFuncDispo() {
+      try {
+        const responseRel = await axios.post(`${host}/listarRelatorios`);
+        const responseFunc = await axios.post(`${host}/listarFunc`);
+
+        let listRel = responseRel.data.relatorioResults;
+        let listFunc = responseFunc.data.FuncResults;
+        
+        let nomesNaoDisponiveis = [];
+        for(let i = 0 ; i < listFunc.length; i++) {
+          let acharItem = false;
+          for(let j = 0 ; j < listRel.length; j++) {
+            console.log(`Comparar ${listFunc[i].id} com ${listRel[j].idfuncionario} `);
+            if(listFunc[i].id == listRel[j].idfuncionario) {
+              acharItem = true;
+              console.log(`${listFunc[i].nome} Está vinculado!`);
+              j = listRel.length
+            }
+          }
+          console.log('-----------')
+          if(acharItem == false) {
+            console.log(`${listFunc[i].nome} NÃO vinculado!`);
+            nomesNaoDisponiveis.push({ id : listFunc[i].id,nome : listFunc[i].nome })
+          }
+        }
+        console.log(nomesNaoDisponiveis)
+        setFuncParaExcluir(nomesNaoDisponiveis)
       } catch (error) {
         console.log('Erro ao obter dados do func:', error);
       }
     }
     fetchData();
     fetchDataRelat();
+    fetDataFuncDispo();
   }, []);
 
 
@@ -45,7 +78,7 @@ function Func() {
 
     if (cpf.length != 11) {
       alert("CPF INVÁLIDO");
-        return;
+      return;
     }
     let verifyDuplicity = false;
     funcs.forEach((item) => {
@@ -54,8 +87,8 @@ function Func() {
         verifyDuplicity = true
       }
     });
-    
-    if(verifyDuplicity == true){
+
+    if (verifyDuplicity == true) {
       return;
     }
     const dados = { nome, cpf, cargo }
@@ -85,22 +118,12 @@ function Func() {
   }
 
   function apagar() {
-    let achouId = false;
-    let funcDisponivel = false;
-    funcs.forEach((item) => {
-      if (item.id == id) {
-        achouId = true;
-      }
-    });
+    let id = document.getElementById("selectEpi").value;
+    setId(id);
 
-    Rels.forEach((item) => {
-      if (item.idfuncionario == id) {
-        alert("Funcionário vinculado a algo,impossível deletar!");
-        funcDisponivel = true;
-        return;
-      }
-    })
-    if (achouId == false || id == null|| funcDisponivel == true) {
+
+
+    if ( id == null) {
       alert("Falha ao remover Funcionário")
       return;
     } else {
@@ -265,7 +288,7 @@ function Func() {
                     <div className='org'>{func.cargo}</div>
                   </div>
                 </li>
-              )) : <h1>Nenhum Funcionário cadastrado!</h1>}
+              )) : <h1>Nenhum Funcionário vinculado cadastrado!</h1>}
             </ul>
           </div>
 
@@ -299,10 +322,21 @@ function Func() {
 
           <div className='excluirFunc' id="excluirFunc">
             <h1>Excluir por Id</h1>
-            <input type='number' id="apagarFuncId" onChange={(evento) => setId(evento.target.value)} />
-            <button onClick={apagar}>
-              <span>Apagar</span>
-            </button>
+            {
+              funcsParaExcluir.length > 0 ? <div>
+                <select id="selectEpi">
+                  {funcsParaExcluir.map(func => (
+                    <option key={func.id} value={func.id}>{func.nome}
+                    </option>
+
+                  ))}
+                </select>
+                <button onClick={apagar} style={{ margin: 10 }}>
+                  <span>Apagar</span>
+                </button>
+
+              </div> : <h3>Nenhum Funcionário disponível!</h3>
+            }
           </div>
 
         </div>

@@ -21,5 +21,4 @@ Em administrar uso de epi:
       - Nomes de epi e funcionario
 Organizar código - Empacotar e comentar
 
-git commit -m "Ajustando para quando não tenha dados em todas as telas, Correção de bug HEPI - Mostrar ocupados, 
-Organização da lista de HEPI E HFUNC e mostrando tudo,filtrando HFUNC por nome"
+git commit -m "Ajetando FUNC E EPI - Excluir pelo nome em vez pelo id"
