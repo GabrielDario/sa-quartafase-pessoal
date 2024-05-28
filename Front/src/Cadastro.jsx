@@ -11,8 +11,7 @@ function Cadastro() {
   const [Epis, setEpis] = useState([])
   const [Func, setFunc] = useState([])
   const [Rels, setRels] = useState([])
-  // const [idRel, setIdRel] = useState('')
-
+  const [Juncao, setJuncao] = useState([]);
   useEffect(() => {
     async function fetchDataEpi() {
       try {
@@ -41,8 +40,32 @@ function Cadastro() {
     async function fetchDataRelat() {
       try {
         const response = await axios.post(`${host}/listarRelatorios`);
-       
         setRels(response.data.relatorioResults);
+      } catch (error) {
+        console.log('Erro ao obter dados do func:', error);
+      }
+    }
+    async function fetchJuncao() {
+      try {
+        const responseEpi = await axios.post(`${host}/listarEpi`);
+        const responseFunc = await axios.post(`${host}/listarFunc`);
+        const responseRel = await axios.post(`${host}/listarRelatorios`);
+
+        console.log(responseEpi.data.episResults);
+        console.log(responseFunc.data.FuncResults);
+        console.log(responseRel.data.relatorioResults)
+
+        let epi = responseEpi.data.episResults;
+        let func = responseFunc.data.FuncResults;
+        let rel = responseRel.data.relatorioResults;
+
+        let listaJunc = []
+        rel.forEach( (item) => {
+          let arrayFunc = func.find((element) => element.id == item.idfuncionario);
+          let arrayEpi = epi.find((element) => element.id == item.idepi);
+          listaJunc.push({ id : item.id, nomeFunc : arrayFunc.nome, nomeEpi : arrayEpi.nome})
+        })
+        setJuncao(listaJunc)
       } catch (error) {
         console.log('Erro ao obter dados do func:', error);
       }
@@ -50,10 +73,10 @@ function Cadastro() {
     fetchDataEpi();
     fetchDataFunc();
     fetchDataRelat();
+    fetchJuncao();
   }, []);
 
   function exRelatorioFront() {
-    console.log(Rels)
     var selectRel = document.getElementById('selectRel');
     var idRel = selectRel.options[selectRel.selectedIndex].value;
 
@@ -145,9 +168,9 @@ function Cadastro() {
           </div>
           <div className='divisa2'>
             <h1>Excluir Registro</h1>
-            { Rels.length == 0 ? <h3>Nenhum epi vinculado</h3> :  <select id="selectRel">
-                  {Rels.map(rels => (
-                    <option key={rels.id} value={rels.id}>{rels.id}
+            { Juncao.length == 0 ? <h3>Nenhum epi vinculado</h3> :  <select id="selectRel">
+                  {Juncao.map(juncao => (
+                    <option key={juncao.id} value={juncao.id}>{juncao.nomeFunc} com {juncao.nomeEpi}
                     </option>
 
                   ))}

@@ -13,12 +13,11 @@ Em administrar uso de epi:
  - Ordenarar por id func e tudo que ele tem
  - Selecionar funcionário filtrará apenas os dos funcionários    
 - Mostra codigo no listar epi
-
 - Excluir por nome no EPI
 - Excluir por nome no Func
 
-- Organizar não repetir 
-      - Nomes de epi e funcionario
+- Excluir relatório nome do func com epi
+
 Organizar código - Empacotar e comentar
 
 git commit -m "Ajetando FUNC E EPI - Excluir pelo nome em vez pelo id"
