@@ -15,9 +15,6 @@ Em administrar uso de epi:
 - Mostra codigo no listar epi
 - Excluir por nome no EPI
 - Excluir por nome no Func
-
 - Excluir relatório nome do func com epi
 
 Organizar código - Empacotar e comentar
-
-git commit -m "Ajetando FUNC E EPI - Excluir pelo nome em vez pelo id"
